@@ -1,1 +1,34 @@
-<h1>hello</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huzz Translator</title>
+</head>
+<body>
+    <h1>Huzz Translator</h1>
+    <p>Enter a sentence and click Translate to convert it:</p>
+    <textarea id="input-sentence" rows="4" cols="50" placeholder="Type your sentence here..."></textarea><br>
+    <button onclick="translate()">Translate</button>
+    <h2>Translated Sentence:</h2>
+    <p id="output-sentence"></p>
+
+    <script>
+        async function translate() {
+            const sentence = document.getElementById('input-sentence').value;
+
+            // Send request to the server to translate the sentence
+            const response = await fetch('/translate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ sentence })
+            });
+
+            const data = await response.json();
+            document.getElementById('output-sentence').innerText = data.translated;
+        }
+    </script>
+</body>
+</html>
